@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import { obtenerProductos } from './api/cliente';
-import type { Producto } from './api/esquemas';
+import { crearPedido, obtenerProductos } from './api/cliente';
+import type { Pedido, Producto } from './api/esquemas';
 import { CarritoProvider, useCarrito } from './carrito/CarritoContext';
 import { Encabezado } from './components/Encabezado';
 import { Pasteleria } from './components/Pasteleria';
+import { Recibo } from './components/Recibo';
 import { SelectorCafe } from './components/SelectorCafe';
 import { Ticket } from './components/Ticket';
 import { leerMesa } from './utils/mesa';
@@ -64,18 +65,33 @@ interface MenuProps {
 }
 
 function Menu({ productos, mesa }: MenuProps) {
-  const { agregar } = useCarrito();
+  const { items, agregar, vaciar } = useCarrito();
+  const [pedido, setPedido] = useState<Pedido | null>(null);
+  const [enviando, setEnviando] = useState(false);
+
+  async function confirmar() {
+    setEnviando(true);
+    try {
+      const lineas = items.map(({ producto, cantidad }) => ({ productoId: producto.id, cantidad }));
+      // Sin mesa no se manda mesaId: el pedido es para retirar en la barra
+      const creado = await crearPedido(mesa === null ? { items: lineas } : { mesaId: mesa, items: lineas });
+      vaciar();
+      setPedido(creado);
+    } finally {
+      setEnviando(false);
+    }
+  }
+
+  // Una vez confirmado, el recibo con lo que devolvió la API reemplaza al menú
+  if (pedido) {
+    return <Recibo pedido={pedido} />;
+  }
 
   return (
     <>
       <SelectorCafe productos={productos} onAgregar={agregar} />
       <Pasteleria productos={productos} onAgregar={agregar} />
-      <Ticket
-        mesa={mesa}
-        onConfirmar={() => {
-          // TODO: confirmar el pedido con POST /pedidos (rama feat/front-confirmar-pedido)
-        }}
-      />
+      <Ticket mesa={mesa} enviando={enviando} onConfirmar={() => void confirmar()} />
     </>
   );
 }

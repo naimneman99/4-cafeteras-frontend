@@ -34,3 +34,25 @@ export const ProductosSchema = z.array(ProductoSchema);
 export const ErrorApiSchema = z.object({
   error: z.string(),
 });
+
+export const PedidoSchema = z.object({
+  id: z.number().int().positive(),
+  mesaId: z.number().int().positive().nullable(),
+  estado: z.string(),
+  items: z.array(
+    z.object({
+      producto: ProductoSchema,
+      cantidad: z.number().int().positive(),
+      subtotal: z.number(),
+    })
+  ),
+  total: z.number(),
+});
+
+export type Pedido = z.infer<typeof PedidoSchema>;
+
+// Lo que el front manda en POST /pedidos (sin mesaId, el pedido es para retirar en la barra)
+export interface NuevoPedido {
+  mesaId?: number;
+  items: { productoId: number; cantidad: number }[];
+}
