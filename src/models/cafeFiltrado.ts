@@ -20,9 +20,4 @@ export class Filtrado extends Cafe {
   get gramosCafe(): number {
     return TAMAÑO_MAPA[this.tamaño];
   }
-
-  calcularPrecio(): number {
-    const gramos = TAMAÑO_MAPA[this.tamaño];
-    return this.precioBase + (gramos * this.precioxGramo);
-  }
 }
