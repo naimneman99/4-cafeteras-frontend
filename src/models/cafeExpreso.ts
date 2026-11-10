@@ -17,8 +17,7 @@ export class Expreso extends Cafe {
     super(id, 'Expreso', variedad, precioBase, tamaño);
   }
 
-  calcularPrecio(): number {
-    const gramos = TAMAÑO_MAPA[this.tamaño];
-    return this.precioBase + (gramos * this.precioxGramo);
+  get gramosCafe(): number {
+    return TAMAÑO_MAPA[this.tamaño];
   }
 }

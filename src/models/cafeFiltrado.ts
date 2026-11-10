@@ -17,8 +17,7 @@ export class Filtrado extends Cafe {
     super(id, 'Filtrado', variedad, precioBase, tamaño);
   }
 
-  calcularPrecio(): number {
-    const gramos = TAMAÑO_MAPA[this.tamaño];
-    return this.precioBase + (gramos * this.precioxGramo);
+  get gramosCafe(): number {
+    return TAMAÑO_MAPA[this.tamaño];
   }
 }
