@@ -12,7 +12,7 @@ export const getMasVendido = (req: Request, res: Response) => {
   const resultado = masVendido(getAllPedidos());
 
   if (!resultado) {
-    res.status(404).json({ mensaje: 'Todavía no hay ventas' });
+    res.status(404).json({ error: 'Todavía no hay ventas' });
     return;
   }
 
