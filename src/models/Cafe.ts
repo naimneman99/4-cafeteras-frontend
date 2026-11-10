@@ -20,4 +20,11 @@ export abstract class Cafe extends Producto {
     super(id, nombre, variedad, precioBase);
     this.precioxGramo = PRECIO_GRAMO_MAPA[variedad];
   }
+
+  // Cada bebida define cuántos gramos lleva según el tamaño
+  abstract get gramosCafe(): number;
+
+  calcularPrecio(): number {
+    return this.precioBase + (this.gramosCafe * this.precioxGramo);
+  }
 }
