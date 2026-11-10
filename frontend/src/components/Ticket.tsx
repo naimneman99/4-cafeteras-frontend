@@ -7,10 +7,11 @@ import { formatearPrecio } from '../utils/precio';
 interface Props {
   mesa: number | null;
   enviando?: boolean;
+  error?: string | null;
   onConfirmar: () => void;
 }
 
-export function Ticket({ mesa, enviando = false, onConfirmar }: Props) {
+export function Ticket({ mesa, enviando = false, error = null, onConfirmar }: Props) {
   const id = useId();
   const { items, sumar, restar, quitar } = useCarrito();
   const destino = mesa === null ? 'Retiro en barra' : `Mesa ${mesa}`;
@@ -76,6 +77,13 @@ export function Ticket({ mesa, enviando = false, onConfirmar }: Props) {
             <span className="price">{formatearPrecio(subtotalOrientativo(items))}</span>
           </div>
         </>
+      )}
+
+      {/* El error queda justo arriba del botón, donde está mirando el cliente */}
+      {error && (
+        <div className="alert alert-danger py-2 small mt-3 mb-0" role="alert">
+          <strong>No se envió el pedido:</strong> {error}
+        </div>
       )}
 
       <button
