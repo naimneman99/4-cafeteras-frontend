@@ -3,8 +3,6 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { SelectorCafe } from '../../src/components/SelectorCafe';
 import { productoPorId, productos } from '../fixtures/productos';
-import '@testing-library/jest-dom';
-
 
 function renderSelector() {
   const onAgregar = vi.fn();
