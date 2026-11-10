@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { getAll, getById } from '../services/producto.service';
+import { getAll, getById, serializarProducto } from '../services/producto.service';
 
 
 export const obtenerProductos = (req: Request, res: Response) => {
-  const lista = getAll();
+  const lista = getAll().map(serializarProducto);
   res.json(lista);
 };
 
@@ -16,8 +16,5 @@ export const obtenerProductoPorId = (req: Request, res: Response) => {
     return res.status(404).json({ mensaje: 'Producto no encontrado' });
   }
 
-  res.json({
-    ...producto,
-    precioFinal: producto.calcularPrecio()
-  });
+  res.json(serializarProducto(producto));
 };
