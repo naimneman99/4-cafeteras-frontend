@@ -18,7 +18,11 @@ export const crearPedido = (items: ItemPedidoInput[]): Pedido => {
 
   // Primero validamos y armamos todos los items; si alguno falla,
   // se lanza el error antes de guardar nada.
-  const itemsPedido = items.map(({ productoId, cantidad }) => {
+  const itemsPedido = items.map((item) => {
+    if (typeof item !== 'object' || item === null) {
+      throw new Error('Cada item necesita productoId y cantidad.');
+    }
+    const { productoId, cantidad } = item;
     const producto = getById(productoId);
     if (!producto) {
       throw new Error(`El producto ${productoId} no existe.`);

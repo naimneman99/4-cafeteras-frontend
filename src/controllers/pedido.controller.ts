@@ -15,7 +15,7 @@ export const postPedido = (req: Request, res: Response) => {
     res.status(201).json(conTotal(nuevoPedido));
   } catch (error) {
     // El service lanza error si los datos son inválidos: eso es un 400
-    res.status(400).json({ mensaje: (error as Error).message });
+    res.status(400).json({ error: (error as Error).message });
   }
 };
 
@@ -29,7 +29,7 @@ export const getPedido = (req: Request, res: Response) => {
   const pedido = getPedidoById(Number(req.params.id));
 
   if (!pedido) {
-    res.status(404).json({ mensaje: 'Pedido no encontrado' });
+    res.status(404).json({ error: 'Pedido no encontrado' });
     return;
   }
 

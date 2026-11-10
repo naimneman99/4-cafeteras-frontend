@@ -13,7 +13,7 @@ export const obtenerProductoPorId = (req: Request, res: Response) => {
   const producto = getById(id);
 
   if (!producto) {
-    return res.status(404).json({ mensaje: 'Producto no encontrado' });
+    return res.status(404).json({ error: 'Producto no encontrado' });
   }
 
   res.json(serializarProducto(producto));
