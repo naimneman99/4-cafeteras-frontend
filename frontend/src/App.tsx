@@ -67,15 +67,20 @@ function Menu({ productos, mesa }: MenuProps) {
   const { items, agregar, vaciar } = useCarrito();
   const [pedido, setPedido] = useState<Pedido | null>(null);
   const [enviando, setEnviando] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function confirmar() {
     setEnviando(true);
+    setError(null);
     try {
       const lineas = items.map(({ producto, cantidad }) => ({ productoId: producto.id, cantidad }));
       // Sin mesa no se manda mesaId: el pedido es para retirar en la barra
       const creado = await crearPedido(mesa === null ? { items: lineas } : { mesaId: mesa, items: lineas });
       vaciar();
       setPedido(creado);
+    } catch (e) {
+      // Si la API rechaza el pedido se muestra su mensaje y el carrito queda como estaba
+      setError(mensajeDe(e));
     } finally {
       setEnviando(false);
     }
@@ -90,7 +95,7 @@ function Menu({ productos, mesa }: MenuProps) {
     <>
       <SelectorCafe productos={productos} onAgregar={agregar} />
       <Pasteleria productos={productos} onAgregar={agregar} />
-      <Ticket mesa={mesa} enviando={enviando} onConfirmar={() => void confirmar()} />
+      <Ticket mesa={mesa} enviando={enviando} error={error} onConfirmar={() => void confirmar()} />
     </>
   );
 }
