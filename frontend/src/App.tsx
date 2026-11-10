@@ -4,9 +4,10 @@ import type { Pedido, Producto } from './api/esquemas';
 import { CarritoProvider, useCarrito } from './carrito/CarritoContext';
 import { Encabezado } from './components/Encabezado';
 import { Pasteleria } from './components/Pasteleria';
-import { Recibo } from './components/Recibo';
 import { SelectorCafe } from './components/SelectorCafe';
+import { Seguimiento } from './components/Seguimiento';
 import { Ticket } from './components/Ticket';
+import { mensajeDe } from './utils/errores';
 import { leerMesa } from './utils/mesa';
 
 // La carga del menú es una unión discriminada: no puede estar cargando y con error a la vez
@@ -14,8 +15,6 @@ type EstadoMenu =
   | { estado: 'cargando' }
   | { estado: 'error'; mensaje: string }
   | { estado: 'listo'; productos: Producto[] };
-
-const mensajeDe = (error: unknown) => (error instanceof Error ? error.message : String(error));
 
 export function App() {
   // La mesa se lee una sola vez, al abrir el menú desde el QR
@@ -84,7 +83,7 @@ function Menu({ productos, mesa }: MenuProps) {
 
   // Una vez confirmado, el recibo con lo que devolvió la API reemplaza al menú
   if (pedido) {
-    return <Recibo pedido={pedido} />;
+    return <Seguimiento pedidoInicial={pedido} />;
   }
 
   return (

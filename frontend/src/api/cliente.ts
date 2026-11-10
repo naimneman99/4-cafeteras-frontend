@@ -48,3 +48,7 @@ export function crearPedido(nuevo: NuevoPedido): Promise<Pedido> {
     body: JSON.stringify(nuevo),
   });
 }
+
+export function obtenerPedido(id: number): Promise<Pedido> {
+  return pedir(`/pedidos/${id}`, PedidoSchema);
+}
