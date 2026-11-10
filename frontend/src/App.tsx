@@ -4,8 +4,8 @@ import type { Pedido, Producto } from './api/esquemas';
 import { CarritoProvider, useCarrito } from './carrito/CarritoContext';
 import { Encabezado } from './components/Encabezado';
 import { Pasteleria } from './components/Pasteleria';
-import { Recibo } from './components/Recibo';
 import { SelectorCafe } from './components/SelectorCafe';
+import { Seguimiento } from './components/Seguimiento';
 import { Ticket } from './components/Ticket';
 import { leerMesa } from './utils/mesa';
 
@@ -84,7 +84,7 @@ function Menu({ productos, mesa }: MenuProps) {
 
   // Una vez confirmado, el recibo con lo que devolvió la API reemplaza al menú
   if (pedido) {
-    return <Recibo pedido={pedido} />;
+    return <Seguimiento pedidoInicial={pedido} />;
   }
 
   return (
