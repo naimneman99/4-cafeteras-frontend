@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { obtenerPedido } from '../api/cliente';
 import type { Pedido } from '../api/esquemas';
+import { mensajeDe } from '../utils/errores';
 import { Recibo } from './Recibo';
 
 interface Props {
@@ -26,7 +27,7 @@ export function Seguimiento({ pedidoInicial }: Props) {
       );
       setPedido(actual);
     } catch (e) {
-      setError(e instanceof Error ? e.message : String(e));
+      setError(mensajeDe(e));
     } finally {
       setConsultando(false);
     }

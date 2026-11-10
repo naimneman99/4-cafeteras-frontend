@@ -7,6 +7,7 @@ import { Pasteleria } from './components/Pasteleria';
 import { SelectorCafe } from './components/SelectorCafe';
 import { Seguimiento } from './components/Seguimiento';
 import { Ticket } from './components/Ticket';
+import { mensajeDe } from './utils/errores';
 import { leerMesa } from './utils/mesa';
 
 // La carga del menú es una unión discriminada: no puede estar cargando y con error a la vez
@@ -14,8 +15,6 @@ type EstadoMenu =
   | { estado: 'cargando' }
   | { estado: 'error'; mensaje: string }
   | { estado: 'listo'; productos: Producto[] };
-
-const mensajeDe = (error: unknown) => (error instanceof Error ? error.message : String(error));
 
 export function App() {
   // La mesa se lee una sola vez, al abrir el menú desde el QR
