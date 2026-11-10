@@ -1,0 +1,148 @@
+// Colores de Cafetería Origen. Se definen antes de importar Bootstrap
+// para que todos sus componentes (botones, alertas, radios) los usen.
+$cafe-espresso: #2f2119;
+$cafe-tostado: #6b4430;
+$cafe-crema: #f6efe6;
+$cafe-espuma: #fffaf4;
+$cafe-caramelo: #c58b52;
+$cafe-hoja: #4e7a4c;
+$cafe-cereza: #a23b2f;
+
+$primary: $cafe-tostado;
+$success: $cafe-hoja;
+$warning: $cafe-caramelo;
+$danger: $cafe-cereza;
+$body-bg: $cafe-crema;
+$body-color: $cafe-espresso;
+$border-radius: 0.625rem;
+$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$list-group-bg: $cafe-espuma;
+
+@import "bootstrap/scss/bootstrap";
+
+// Piezas del menú (mock C · Comanda)
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: $cafe-espuma;
+  color: $cafe-espresso;
+  border-bottom: 3px double $cafe-espresso;
+
+  h1 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+}
+
+.mesa-badge {
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: $cafe-caramelo;
+  color: $cafe-espresso;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &.is-barra {
+    background: transparent;
+    border: 1px solid currentColor;
+  }
+}
+
+.menu {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.sec-title {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid $border-color;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.field-legend {
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.origin-desc {
+  padding-left: 1.5em;
+}
+
+.price {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.qty {
+  width: 7.25rem;
+  flex-wrap: nowrap;
+
+  output {
+    font-weight: 600;
+  }
+}
+
+.ticket {
+  padding: 1rem;
+  border: 1px dashed #bfa892;
+  border-radius: 0.5rem;
+  background: $cafe-espuma;
+  font-variant-numeric: tabular-nums;
+}
+
+.ticket-title {
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px dashed #bfa892;
+  font: 700 0.8rem/1.3 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.ticket-lines > li {
+  padding: 0.5rem 0;
+  border-bottom: 1px dotted #d8c7b5;
+}
+
+.ticket-total {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 0.6rem;
+  font-weight: 700;
+}
+
+.ticket--receipt {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.875rem;
+}
+
+.ticket-facts {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 0.75rem;
+  margin-bottom: 0.75rem;
+
+  dt {
+    font-weight: 400;
+    color: $text-muted;
+  }
+
+  dd {
+    margin: 0;
+    text-align: right;
+  }
+}
