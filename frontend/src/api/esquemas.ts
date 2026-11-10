@@ -27,3 +27,10 @@ export const ProductoSchema = z.discriminatedUnion('tipo', [ProductoCafeSchema, 
 export type Producto = z.infer<typeof ProductoSchema>;
 export type ProductoCafe = z.infer<typeof ProductoCafeSchema>;
 export type Bebida = ProductoCafe['tipo'];
+
+export const ProductosSchema = z.array(ProductoSchema);
+
+// Formato de todos los errores de la API
+export const ErrorApiSchema = z.object({
+  error: z.string(),
+});
