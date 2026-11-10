@@ -6,10 +6,11 @@ import { formatearPrecio } from '../utils/precio';
 
 interface Props {
   mesa: number | null;
+  enviando?: boolean;
   onConfirmar: () => void;
 }
 
-export function Ticket({ mesa, onConfirmar }: Props) {
+export function Ticket({ mesa, enviando = false, onConfirmar }: Props) {
   const id = useId();
   const { items, sumar, restar, quitar } = useCarrito();
   const destino = mesa === null ? 'Retiro en barra' : `Mesa ${mesa}`;
@@ -80,10 +81,10 @@ export function Ticket({ mesa, onConfirmar }: Props) {
       <button
         type="button"
         className="btn btn-primary w-100 mt-3"
-        disabled={items.length === 0}
+        disabled={items.length === 0 || enviando}
         onClick={onConfirmar}
       >
-        Confirmar pedido
+        {enviando ? 'Enviando…' : 'Confirmar pedido'}
       </button>
     </section>
   );

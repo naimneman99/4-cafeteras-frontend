@@ -1,5 +1,12 @@
 import type { z } from 'zod';
-import { ErrorApiSchema, ProductosSchema, type Producto } from './esquemas';
+import {
+  ErrorApiSchema,
+  PedidoSchema,
+  ProductosSchema,
+  type NuevoPedido,
+  type Pedido,
+  type Producto,
+} from './esquemas';
 
 // Único módulo que habla con la API: ningún componente hace fetch directo.
 // Toda respuesta se valida con su esquema antes de usarse.
@@ -32,4 +39,12 @@ async function pedir<T>(ruta: string, esquema: z.ZodType<T>, init?: RequestInit)
 
 export function obtenerProductos(): Promise<Producto[]> {
   return pedir('/productos', ProductosSchema);
+}
+
+export function crearPedido(nuevo: NuevoPedido): Promise<Pedido> {
+  return pedir('/pedidos', PedidoSchema, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(nuevo),
+  });
 }
