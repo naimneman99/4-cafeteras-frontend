@@ -5,7 +5,9 @@ export class Pedido {
   constructor(
     public id: number,
     public items: ItemPedido[] = [],
-    public estado: string = 'pendiente'
+    public estado: string = 'pendiente',
+    // null: el pedido es para retirar en la barra
+    public mesaId: number | null = null
   ) {}
 
   calcularTotal(): number {

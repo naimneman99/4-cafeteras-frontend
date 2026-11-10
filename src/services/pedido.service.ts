@@ -11,7 +11,20 @@ export interface ItemPedidoInput {
 let pedidos: Pedido[] = [];
 let siguienteId = 1;
 
-export const crearPedido = (items: ItemPedidoInput[]): Pedido => {
+// La mesa llega del body tal cual: puede faltar (retiro en barra) o venir con cualquier valor
+const validarMesa = (mesaId: unknown): number | null => {
+  if (mesaId === undefined || mesaId === null) {
+    return null;
+  }
+  if (typeof mesaId !== 'number' || !Number.isInteger(mesaId) || mesaId <= 0) {
+    throw new Error('La mesa debe ser un número entero positivo.');
+  }
+  return mesaId;
+};
+
+export const crearPedido = (items: ItemPedidoInput[], mesaId?: unknown): Pedido => {
+  const mesa = validarMesa(mesaId);
+
   if (!Array.isArray(items) || items.length === 0) {
     throw new Error('El pedido debe tener al menos un item.');
   }
@@ -33,7 +46,7 @@ export const crearPedido = (items: ItemPedidoInput[]): Pedido => {
     return new ItemPedido(producto, cantidad);
   });
 
-  const pedido = new Pedido(siguienteId++, itemsPedido);
+  const pedido = new Pedido(siguienteId++, itemsPedido, 'pendiente', mesa);
   pedidos.push(pedido);
   return pedido;
 };
